@@ -24,9 +24,7 @@
       <p>
         <img :src="userModel.picture" class="img-thumbnail"/>
       </p>
-      <input type="file" class="hidden" ref="image" @change="uploadImage"/>
-      <input type="text" v-model="userModel.picture" v-validate="'required'" name="image"/>
-      <button class="btn btn-primary" @click="selectImage">Choose image</button>
+      <FileUploader v-model="userModel.picture" v-validate="'required'" name="image"></FileUploader>
       <span v-if="errors.has('image')" class="help-block text-danger">{{ errors.first('image') }}</span>
     </div>
 
@@ -86,10 +84,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import DatePicker from '@/components/DatePicker'
 import MediumEditor from '@/components/MediumEditor'
+import FileUploader from '@/components/FileUploader'
 
 export default {
   name: 'add-user',
@@ -113,28 +110,7 @@ export default {
       return currDate + '.' + currMonth + '.' + currYear
     }
   },
-  components: {DatePicker, MediumEditor},
-  methods: {
-    selectImage () {
-      this.$refs.image.click()
-    },
-    uploadImage () {
-      const url = 'https://api.imgur.com/3/image'
-      const data = new FormData()
-      data.append('image', this.$refs.image.files[0])
-      const config = {
-        headers: {
-          'Authorization': 'Client-ID 23fa90b176851c4'
-        }
-      }
-      axios.post(url, data, config)
-        .then(res => res.data)
-        .then(res => {
-          this.user.picture = res.data.link
-          this.$refs.image.value = ''
-        })
-    }
-  }
+  components: {DatePicker, MediumEditor, FileUploader}
 }
 </script>
 
