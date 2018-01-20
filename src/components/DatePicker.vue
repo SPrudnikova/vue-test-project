@@ -19,11 +19,6 @@ export default {
   watch: {
     value: 'updateDatePicker'
   },
-  methods: {
-    updateDatePicker () {
-      this.fp.setDate(this.value)
-    }
-  },
   mounted () {
     this.fp = flatpickr(this.$refs.picker, {
       dateFormat: 'd.m.Y',
@@ -31,6 +26,11 @@ export default {
         this.$emit('input', dateStr)
       }
     })
+  },
+  methods: {
+    updateDatePicker () {
+      this.fp.setDate(this.value)
+    }
   }
 }
 </script>

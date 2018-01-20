@@ -1,5 +1,7 @@
 <template>
-  <div ref="editor" class="editor">{{value}}</div>
+  <div ref="editor" class="editor">
+    <p>{{defaultValue}}</p>
+  </div>
 </template>
 
 <script>
@@ -11,21 +13,31 @@ export default {
   name: 'MediumEditor',
   props: ['value'],
   data: () => ({
+    enteredValue: this.value,
+    defaultValue: this.value,
     editor: null
   }),
-  mounted () {
-    this.editor = new MediumEditor(this.$refs.editor)
-    this.editor.subscribe('editableInput', this.getValue)
-  },
   watch: {
-    value: 'setNewContent'
+    value: 'updateValues'
+  },
+  mounted () {
+    this.editor = new MediumEditor(this.$refs.editor, {placeholder: false})
+    this.editor.subscribe('editableInput', this.getValue)
+    this.editor.on(this.$refs.editor, 'blur', this.sendValueUp)
+  },
+  beforeDestroy () {
+    this.editor.destroy()
   },
   methods: {
     getValue (event, editable) {
-      this.$emit('input', editable.innerHTML)
+      this.enteredValue = editable.innerText
     },
-    setNewContent () {
-      this.editor.setContent(this.value)
+    updateValues () {
+      this.enteredValue = this.value
+      this.defaultValue = this.value
+    },
+    sendValueUp () {
+      this.$emit('input', this.enteredValue)
     }
   }
 }

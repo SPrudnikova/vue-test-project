@@ -15,6 +15,11 @@ Vue.use(VeeValidate)
 Vue.config.productionTip = false
 Vue.filter('uppercase', uppercase)
 
+window.addEventListener('unhandledrejection', event => {
+  window.console.error(event.promise)
+  window.console.error(event.reason)
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

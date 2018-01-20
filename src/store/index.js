@@ -1,27 +1,21 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
+import {Todos} from './todos'
+import {Users} from './users'
+
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
 const store = new Vuex.Store({
   state: {
-    todosCount: 0
+    apiURL: 'http://localhost:3000'
   },
   strict: debug,
-  mutations: {
-    addTodo (state, payload) {
-      console.log('payload', payload)
-      state.todosCount++
-    }
-  },
-  actions: {
-    incrementAsync ({ commit }, payload) {
-      setTimeout(() => {
-        commit('addTodo', payload)
-      }, 1000)
-    }
+  modules: {
+    usersModule: Users,
+    todosModule: Todos
   }
 })
 

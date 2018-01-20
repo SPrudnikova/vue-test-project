@@ -1,10 +1,8 @@
 <template>
   <div>
-    <UserForm :user="user" :userModel="userModel"></UserForm>
+    <UserForm :userModel="userModel"></UserForm>
     <button :disabled="isSaveDisabled" class="btn btn-success" @click="saveChanges"> Save changes </button>
-    <button class="btn btn-danger"> Delete user </button>
-    <pre>{{userModel}}</pre>
-    <pre>{{user}}</pre>
+    <button class="btn btn-danger" @click="removeUser"> Remove user </button>
   </div>
 </template>
 
@@ -31,6 +29,16 @@ export default {
       return this.errors.all().length !== 0
     }
   },
+  watch: {
+    user: 'updateUserModel'
+  },
+  mounted () {
+    this.loadUser()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.loadUser()
+    next()
+  },
   methods: {
     loadUser () {
       axios.get(`http://localhost:3000/users/${this.id}`)
@@ -46,17 +54,13 @@ export default {
         .then((res) => {
           this.user = res.data
         })
+    },
+    removeUser () {
+      axios.delete(`http://localhost:3000/users/${this.id}`)
+        .then(() => {
+          this.$router.push({ path: '/users-list' })
+        })
     }
-  },
-  mounted () {
-    this.loadUser()
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.loadUser()
-    next()
-  },
-  watch: {
-    user: 'updateUserModel'
   }
 }
 </script>
