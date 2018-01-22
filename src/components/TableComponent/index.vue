@@ -13,14 +13,7 @@
             </th>
           </tr>
           <tr v-for="user in paginatedData" :key="user.id" class="striped user-table__border-bottom-row">
-            <td v-for="headerField in headerFields" :key="headerField.key" class="user-table__cell">
-            <span v-if="headerField.link">
-              <router-link :to="`/user/${user.id}`"># {{ user.id }}</router-link>
-            </span>
-              <span v-else>
-                {{user[headerField.key]}}
-              </span>
-            </td>
+            <slot name="rows" v-bind="user"></slot>
           </tr>
         </table>
 

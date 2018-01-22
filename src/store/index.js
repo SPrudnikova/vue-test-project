@@ -1,8 +1,8 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
-import {Todos} from './todos'
-import {Users} from './users'
+import {Todos, moduleName as todosModule} from './todos'
+import {Users, moduleName as usersModule} from './users'
 
 Vue.use(Vuex)
 
@@ -14,8 +14,8 @@ const store = new Vuex.Store({
   },
   strict: debug,
   modules: {
-    usersModule: Users,
-    todosModule: Todos
+    [usersModule]: Users,
+    [todosModule]: Todos
   }
 })
 

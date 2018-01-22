@@ -7,6 +7,16 @@
                  :selectedRowsQty="Number(selectedRowsQty)"
                  :selectedPage="selectedPage"
                  :title="tableHeader">
+        <template slot="rows" slot-scope="props">
+          <td v-for="headerField in headerFields" :key="headerField.key" class="user-table__cell">
+            <router-link :to="`/user/${props.id}`" v-if="headerField.link">
+              {{ props.id }}
+            </router-link>
+            <span v-else>
+              {{props[headerField.key]}}
+            </span>
+          </td>
+        </template>
         <RowsCountSelect slot="rowsCountSelect" v-model.number="selectedRowsQty"></RowsCountSelect>
         <TablePagination slot="tablePagination" v-model="selectedPage" :totalPage="totalPage"></TablePagination>
       </UserTable>
@@ -44,11 +54,11 @@ export default {
     }
   },
   computed: {
-    totalPage () {
-      return Math.ceil(this.users.length / this.selectedRowsQty)
-    },
     usersCount () {
       return this.users.length
+    },
+    totalPage () {
+      return Math.ceil(this.usersCount / this.selectedRowsQty)
     },
     tableHeader () {
       return `Total users quantity - ${this.usersCount}`

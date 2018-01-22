@@ -16,15 +16,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <router-link tag="li" to="/dashboard" active-class="active" exact>
+              <a>Dashboard</a>
+            </router-link>
             <router-link tag="li" to="/users-list" active-class="active" exact>
-              <a>
-                Список пользователей
-              </a>
+              <a>User list</a>
             </router-link>
             <router-link tag="li" to="/user/add" active-class="active" exact>
-              <a>
-                Добавить пользователя
-              </a>
+              <a>Add user</a>
             </router-link>
           </ul>
         </div>

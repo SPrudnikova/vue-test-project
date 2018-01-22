@@ -6,6 +6,7 @@
 import { mapActions } from 'vuex'
 
 import UserList from '@/routes/UserListPage/UserList.vue'
+import {ACTION_LOAD_USERS} from '@/store/users'
 
 export default {
   name: 'UserListPage',
@@ -20,7 +21,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadUsers: 'loadUsers'
+      loadUsers: ACTION_LOAD_USERS
     })
   }
 }

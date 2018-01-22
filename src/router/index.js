@@ -5,6 +5,7 @@ import NotFoundPage from '@/routes/NotFoundPage'
 import UserAddPage from '@/routes/UserPage/UserAddPage'
 import UserProfilePage from '@/routes/UserPage/UserProfilePage'
 import WelcomePage from '@/routes/WelcomePage'
+import DashboardPage from '@/routes/DashboardPage'
 
 Vue.use(Router)
 
@@ -13,6 +14,7 @@ export default new Router({
   routes: [
     {path: '/', component: WelcomePage},
     {path: '/users-list', component: UserListPage},
+    {path: '/dashboard', component: DashboardPage},
     {
       path: '/user',
       component: { template: '<router-view/>' },
